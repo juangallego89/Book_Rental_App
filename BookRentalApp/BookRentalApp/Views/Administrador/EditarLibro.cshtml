@@ -1,0 +1,64 @@
+﻿@model BookRentalApp.Models.Libros
+@{
+    Layout = "~/Views/Shared/_MenuAdministrador.cshtml";
+}
+<div id="page-wrapper" class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Editar libro</div>
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-2">
+                                <div class="thumbnail">
+                                    <img clas="rounded img-thumbnail" height="300" src="@Model.Imagen" />
+                                    <div class="caption">
+                                        <h3>@Model.Titulo</h3>
+                                        <p>@Model.Autor</p>
+                                        <p>@Model.Categoria</p>
+                                        <p>@Model.Ejemplares</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-10">
+                                <form class="form-horizontal" method="post" action="~/Administrador/ActualizarLibro">
+                                    <input type="hidden" name="ID_Libro" value="@Model.ID_Libro" />
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Titulo">Título:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Titulo" value="@Model.Titulo" placeholder="Ingrese el título del libro" required maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Autor">Autor:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Autor" value="@Model.Autor" placeholder="Ingrese el autor del libro" required maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Categoria">Categoría:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Categoria" value="@Model.Categoria" placeholder="Ingrese la categoría" required maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Ejemplares">Cantidad de ejemplares:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="number" class="form-control" name="Ejemplares" value="@Model.Ejemplares" placeholder="Ingrese la cantidad de ejemplares" required min="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Actualizar libro</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

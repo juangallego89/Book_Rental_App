@@ -1,0 +1,62 @@
+﻿@model BookRentalApp.Models.ViewModels.Libro
+@{
+    Layout = "~/Views/Shared/_MenuAdministrador.cshtml";
+}
+<div id="page-wrapper" class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Agregar libro</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form class="form-horizontal" method="post" action="~/Administrador/AgregarLibro">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Titulo">Título:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="text" class="form-control" name="Titulo" placeholder="Ingrese el título del libro" required maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Autor">Autor:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="text" class="form-control" name="Autor" placeholder="Ingrese el autor del libro" required maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Categoria">Categoría:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="text" class="form-control" name="Categoria" placeholder="Ingrese la categoría" required maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Ejemplares">Cantidad de ejemplares:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="number" class="form-control" name="Ejemplares" placeholder="Ingrese la cantidad de ejemplares" required min="1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="ID_Tarifa">Tarifa de alquiler:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="number" class="form-control" name="ID_Tarifa" placeholder="Ingrese la tarifa de alquiler" required min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Imagen">Portada:</label>
+                                    <div class="col-sm-10 col-lg-6">
+                                        <input type="text" class="form-control" value="/images/book-icon.jpg" name="Imagen" placeholder="Seleccione la imagen de portada" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Registrar libro</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

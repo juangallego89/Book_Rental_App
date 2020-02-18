@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookRentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Libros">
+          <Key>
+            <PropertyRef Name="ID_Libro" />
+          </Key>
+          <Property Name="ID_Libro" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Reserva" Type="bigint" />
+          <Property Name="ID_Tarifa" Type="bigint" Nullable="false" />
+          <Property Name="Titulo" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Autor" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Ejemplares" Type="int" Nullable="false" />
+          <Property Name="Imagen" Type="nchar" MaxLength="50" />
+          <Property Name="Estado" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EstadoRegistro" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservas">
+          <Key>
+            <PropertyRef Name="ID_Reserva" />
+          </Key>
+          <Property Name="ID_Reserva" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Usuario" Type="bigint" Nullable="false" />
+          <Property Name="ID_Libro" Type="bigint" Nullable="false" />
+          <Property Name="ValorReserva" Type="money" Nullable="false" />
+          <Property Name="FechaReserva" Type="datetime" Nullable="false" />
+          <Property Name="FechaEntrega" Type="date" Nullable="false" />
+          <Property Name="Estado" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EstadoRegistro" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tarifas">
+          <Key>
+            <PropertyRef Name="ID_Tarifa" />
+          </Key>
+          <Property Name="ID_Tarifa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Libro" Type="bigint" />
+          <Property Name="Nombre" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tarifa" Type="money" Nullable="false" />
+          <Property Name="Estado" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EstadoRegistro" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrimerNombre" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="SegundoNombre" Type="nchar" MaxLength="30" />
+          <Property Name="PrimerApellido" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="SegundoApellido" Type="nchar" MaxLength="30" />
+          <Property Name="Correo" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Contrasena" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Telefono" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Direccion" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Documento" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="TipoDocumento" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="Rol" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EstadoRegistro" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Libros_Reservas">
+          <End Role="Reservas" Type="Self.Reservas" Multiplicity="0..1" />
+          <End Role="Libros" Type="Self.Libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservas">
+              <PropertyRef Name="ID_Reserva" />
+            </Principal>
+            <Dependent Role="Libros">
+              <PropertyRef Name="ID_Reserva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Libros_Tarifas">
+          <End Role="Tarifas" Type="Self.Tarifas" Multiplicity="1" />
+          <End Role="Libros" Type="Self.Libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarifas">
+              <PropertyRef Name="ID_Tarifa" />
+            </Principal>
+            <Dependent Role="Libros">
+              <PropertyRef Name="ID_Tarifa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Reservas">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Reservas" Type="Self.Reservas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Reservas">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookRentalModelStoreContainer">
+          <EntitySet Name="Libros" EntityType="Self.Libros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservas" EntityType="Self.Reservas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarifas" EntityType="Self.Tarifas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Libros_Reservas" Association="Self.FK_Libros_Reservas">
+            <End Role="Reservas" EntitySet="Reservas" />
+            <End Role="Libros" EntitySet="Libros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Libros_Tarifas" Association="Self.FK_Libros_Tarifas">
+            <End Role="Tarifas" EntitySet="Tarifas" />
+            <End Role="Libros" EntitySet="Libros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Reservas" Association="Self.FK_Usuarios_Reservas">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Reservas" EntitySet="Reservas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookRentalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BookRentalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Libros" EntityType="BookRentalModel.Libros" />
+          <EntitySet Name="Reservas" EntityType="BookRentalModel.Reservas" />
+          <EntitySet Name="Tarifas" EntityType="BookRentalModel.Tarifas" />
+          <EntitySet Name="Usuarios" EntityType="BookRentalModel.Usuarios" />
+          <AssociationSet Name="FK_Libros_Reservas" Association="BookRentalModel.FK_Libros_Reservas">
+            <End Role="Reservas" EntitySet="Reservas" />
+            <End Role="Libros" EntitySet="Libros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Libros_Tarifas" Association="BookRentalModel.FK_Libros_Tarifas">
+            <End Role="Tarifas" EntitySet="Tarifas" />
+            <End Role="Libros" EntitySet="Libros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Reservas" Association="BookRentalModel.FK_Usuarios_Reservas">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Reservas" EntitySet="Reservas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Libros">
+          <Key>
+            <PropertyRef Name="ID_Libro" />
+          </Key>
+          <Property Name="ID_Libro" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Reserva" Type="Int64" />
+          <Property Name="ID_Tarifa" Type="Int64" Nullable="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Autor" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Ejemplares" Type="Int32" Nullable="false" />
+          <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EstadoRegistro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reservas" Relationship="BookRentalModel.FK_Libros_Reservas" FromRole="Libros" ToRole="Reservas" />
+          <NavigationProperty Name="Tarifas" Relationship="BookRentalModel.FK_Libros_Tarifas" FromRole="Libros" ToRole="Tarifas" />
+        </EntityType>
+        <EntityType Name="Reservas">
+          <Key>
+            <PropertyRef Name="ID_Reserva" />
+          </Key>
+          <Property Name="ID_Reserva" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Usuario" Type="Int64" Nullable="false" />
+          <Property Name="ID_Libro" Type="Int64" Nullable="false" />
+          <Property Name="ValorReserva" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FechaReserva" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EstadoRegistro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Libros" Relationship="BookRentalModel.FK_Libros_Reservas" FromRole="Reservas" ToRole="Libros" />
+          <NavigationProperty Name="Usuarios" Relationship="BookRentalModel.FK_Usuarios_Reservas" FromRole="Reservas" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Tarifas">
+          <Key>
+            <PropertyRef Name="ID_Tarifa" />
+          </Key>
+          <Property Name="ID_Tarifa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Libro" Type="Int64" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Tarifa" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EstadoRegistro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Libros" Relationship="BookRentalModel.FK_Libros_Tarifas" FromRole="Tarifas" ToRole="Libros" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrimerNombre" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="PrimerApellido" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="SegundoApellido" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Contrasena" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Documento" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TipoDocumento" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Rol" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EstadoRegistro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reservas" Relationship="BookRentalModel.FK_Usuarios_Reservas" FromRole="Usuarios" ToRole="Reservas" />
+        </EntityType>
+        <Association Name="FK_Libros_Reservas">
+          <End Type="BookRentalModel.Reservas" Role="Reservas" Multiplicity="0..1" />
+          <End Type="BookRentalModel.Libros" Role="Libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reservas">
+              <PropertyRef Name="ID_Reserva" />
+            </Principal>
+            <Dependent Role="Libros">
+              <PropertyRef Name="ID_Reserva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Libros_Tarifas">
+          <End Type="BookRentalModel.Tarifas" Role="Tarifas" Multiplicity="1" />
+          <End Type="BookRentalModel.Libros" Role="Libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarifas">
+              <PropertyRef Name="ID_Tarifa" />
+            </Principal>
+            <Dependent Role="Libros">
+              <PropertyRef Name="ID_Tarifa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Reservas">
+          <End Type="BookRentalModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="BookRentalModel.Reservas" Role="Reservas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Reservas">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookRentalModelStoreContainer" CdmEntityContainer="BookRentalEntities">
+          <EntitySetMapping Name="Libros">
+            <EntityTypeMapping TypeName="BookRentalModel.Libros">
+              <MappingFragment StoreEntitySet="Libros">
+                <ScalarProperty Name="EstadoRegistro" ColumnName="EstadoRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Ejemplares" ColumnName="Ejemplares" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Autor" ColumnName="Autor" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="ID_Tarifa" ColumnName="ID_Tarifa" />
+                <ScalarProperty Name="ID_Reserva" ColumnName="ID_Reserva" />
+                <ScalarProperty Name="ID_Libro" ColumnName="ID_Libro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservas">
+            <EntityTypeMapping TypeName="BookRentalModel.Reservas">
+              <MappingFragment StoreEntitySet="Reservas">
+                <ScalarProperty Name="EstadoRegistro" ColumnName="EstadoRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="FechaReserva" ColumnName="FechaReserva" />
+                <ScalarProperty Name="ValorReserva" ColumnName="ValorReserva" />
+                <ScalarProperty Name="ID_Libro" ColumnName="ID_Libro" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="ID_Reserva" ColumnName="ID_Reserva" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarifas">
+            <EntityTypeMapping TypeName="BookRentalModel.Tarifas">
+              <MappingFragment StoreEntitySet="Tarifas">
+                <ScalarProperty Name="EstadoRegistro" ColumnName="EstadoRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Tarifa" ColumnName="Tarifa" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID_Libro" ColumnName="ID_Libro" />
+                <ScalarProperty Name="ID_Tarifa" ColumnName="ID_Tarifa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="BookRentalModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="EstadoRegistro" ColumnName="EstadoRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

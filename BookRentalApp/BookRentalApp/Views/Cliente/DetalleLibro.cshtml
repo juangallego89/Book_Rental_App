@@ -1,0 +1,80 @@
+﻿@model BookRentalApp.Models.Libros
+@{
+    Layout = "~/Views/Shared/_MenuCliente.cshtml";
+}
+@Styles.Render("~/Content/css")
+
+<div id="page-wrapper" class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Alquilar libro</div>
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-2">
+                                <div class="thumbnail">
+                                    <img clas="rounded img-thumbnail" height="300" src="@Model.Imagen" />
+                                    <div class="caption">
+                                        <h3>@Model.Titulo</h3>
+                                        <p>@Model.Autor</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-10">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Titulo">Título:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Titulo" value="@Model.Titulo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Autor">Autor:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Autor" value="@Model.Autor" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Categoria">Categoría:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="Categoria" value="@Model.Categoria" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Ejemplares">Cantidad de ejemplares:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="number" class="form-control" name="Ejemplares" value="@Model.Ejemplares" placeholder="Ingrese la cantidad de ejemplares" required min="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="FechaDevolucion">Fecha de devolución:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="text" class="form-control" name="FechaDevolucion" value="2020/02/29">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="ValorAlquiler">Costo del alquiler:</label>
+                                        <div class="col-sm-10 col-lg-6">
+                                            <input type="number" class="form-control" name="ValorAlquiler" value="" required disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            @*<button type="submit" class="btn btn-primary">Alquilar libro</button>*@
+                                            <p>
+                                                @Html.ActionLink("Alquilar", "Alquilar", new { IdLibro = Model.ID_Libro, FechaEntrega = "2020/02/23" }, new { @class = "btn btn-primary" })
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
